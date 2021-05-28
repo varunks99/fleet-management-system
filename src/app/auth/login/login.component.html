@@ -1,1 +1,31 @@
-<h1>he</h1>
+<div style="margin-top: 13%">
+    <div class="card shadow o-hidden border-0 my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="text-dark mb-4">Welcome!</h4>
+                        </div>
+                        <form class="user" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="text" id="username"
+                                    placeholder="Enter your username" ngModel name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="email" id="email"
+                                    placeholder="Enter your email" ngModel name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="password" id="password"
+                                    placeholder="Enter your password" ngModel name="password" required>
+                            </div>
+                            <button class="btn bg-orange btn-block text-white btn-user" type="submit"
+                                [disabled]="loginForm.invalid" style="border-radius:20px;">REGISTER</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
