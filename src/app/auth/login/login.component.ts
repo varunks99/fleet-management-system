@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (res: any) => {
           if (res.Validated)
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/fleet-map']);
           else {
             this.disabled = false;
             this.buttonText = 'Log In';

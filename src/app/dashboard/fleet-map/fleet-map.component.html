@@ -1,4 +1,15 @@
-<p>fleet-map works!</p>
 <agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <agm-marker *ngFor="let key of objectKeys(vehicleData)" [latitude]="vehicleData[key].mrLat"
+        [longitude]="vehicleData[key].mrLong" [label]="{color: 'white', text: vehicleData[key].uid}">
+    </agm-marker>
 </agm-map>
+
+<div class="row">
+    <canvas class="col-6" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+        [legend]="true" [chartType]="'bar'">
+    </canvas>
+    <canvas class="col-6" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+        [legend]="true" [chartType]="'line'">
+    </canvas>
+
+</div>

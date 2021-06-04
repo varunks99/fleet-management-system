@@ -14,6 +14,7 @@ export class SessionService {
     return this.http.post(this.url + '/manager/login', data)
       .pipe(map((result: any) => {
         if (result.Validated) {
+          console.log(result);
           window.sessionStorage.setItem('username', data.username)
         }
         return result;
@@ -22,10 +23,14 @@ export class SessionService {
 
   register(data: any) {
     window.sessionStorage.removeItem('username');
-    return this.http.post(this.url + '/manager/login', data)
+    return this.http.post(this.url + '/manager', data)
       .pipe(map((result: any) => {
         return result;
       }))
+  }
+
+  logout() {
+    window.sessionStorage.removeItem('username');
   }
 
 }
