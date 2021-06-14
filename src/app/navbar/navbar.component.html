@@ -11,8 +11,8 @@
                 <a class="nav-link btn btn-primary text-white mr-2" routerLink="/register">Register</a>
             </span>
             <ng-template #loggedIn>
-                <a class="nav-link active" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" routerLink="/fleet-map">Map</a>
+                <a class="nav-link" routerLink="/edit-fleet">Edit Fleet</a>
                 <button class="btn btn-primary" (click)="logOut()">Logout</button>
             </ng-template>
         </div>

@@ -68,7 +68,9 @@ export class FleetMapComponent implements OnInit {
     }
   };
   lineChartLabels: Label[] = [];
-  lineChartData: ChartDataSets[] = [];
+  lineChartData: ChartDataSets[] = [
+    { data: [], label: 'Speed' }
+  ];
   // lineChartColors: Color[] = [
   //   {
   //     borderColor: 'black',
@@ -79,6 +81,14 @@ export class FleetMapComponent implements OnInit {
   ngOnInit(): void {
     this.username = window.sessionStorage.getItem('username') || '';
     this.initialize();
+    setInterval(() => {
+      if ((this.lineChartData[0].data || []).length > 15) {
+        this.lineChartLabels.shift();
+        this.lineChartData[0].data?.shift();
+      }
+      this.lineChartLabels.push(this.getFormattedTime());
+      this.lineChartData[0].data?.push(Math.round(Math.random() * 150));
+    }, 2000);
   }
 
   objectKeys(obj: any) {
@@ -112,7 +122,6 @@ export class FleetMapComponent implements OnInit {
             data.uid = String(data.uid);
             this.vehicleData[data.uid] = data;
             this.setFuelData(data.mrGas);
-            this.getCurrentSpeed(data.mrSpeed, i)
           }
         )
     }
@@ -128,10 +137,13 @@ export class FleetMapComponent implements OnInit {
     }
   }
 
-  getCurrentSpeed(mrSpeed: number, i: number) {
+  getCurrentSpeed(event: any) {
+    this.lineChartLabels = [];
+    this.lineChartData[0].data = [];
     this.lineChartLabels.push(this.getFormattedTime());
-    this.lineChartData[i].data?.push(mrSpeed || Math.round(Math.random() * 150));
+    this.lineChartData[0].data?.push(this.vehicleData[event.target.value].mrSpeed || Math.round(Math.random() * 150));
   }
+
 
   getFormattedTime = function () {
     var date = new Date();

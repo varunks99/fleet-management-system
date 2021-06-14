@@ -36,6 +36,7 @@ export class EditFleetComponent implements OnInit {
           this.http.put(`${this.url}/manager/${this.username}`, { uid: data.uid })
             .subscribe(
               (res: any) => {
+                this.vehicleIDs.push(data.uid);
                 alert("Added " + data.uid);
               }
             )

@@ -1,15 +1,26 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker *ngFor="let key of objectKeys(vehicleData)" [latitude]="vehicleData[key].mrLat"
-        [longitude]="vehicleData[key].mrLong" [label]="{color: 'white', text: vehicleData[key].uid}">
-    </agm-marker>
-</agm-map>
+<div class="m-4">
+    <agm-map [latitude]="lat" [longitude]="lng">
+        <agm-marker *ngFor="let key of objectKeys(vehicleData)" [latitude]="vehicleData[key].mrLat"
+            [longitude]="vehicleData[key].mrLong" [label]="{color: 'white', text: vehicleData[key].uid}">
+        </agm-marker>
+    </agm-map>
 
-<div class="row">
-    <canvas class="col-6" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-        [legend]="true" [chartType]="'bar'">
-    </canvas>
-    <canvas class="col-6" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-        [legend]="true" [chartType]="'line'">
-    </canvas>
+    <div class="row">
+        <canvas class="col-md-6" baseChart [datasets]="barChartData" [labels]="barChartLabels"
+            [options]="barChartOptions" [legend]="true" [chartType]="'bar'">
+        </canvas>
+        <div class="col-md-6 row justify-content-center">
+            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [legend]="true" [chartType]="'line'">
+            </canvas>
+            <br>
+            <div>
+                <label for="vehicleID">Select vehicle ID</label>
+                <select class="form-control inline" id="vehicleID" (change)="getCurrentSpeed($event)">
+                    <option *ngFor="let id of vehicleIDs" [value]="id">{{id}}</option>
+                </select>
+            </div>
+        </div>
 
+    </div>
 </div>
