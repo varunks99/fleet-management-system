@@ -16,7 +16,7 @@
             <br>
             <div>
                 <label for="vehicleID">Select vehicle ID</label>
-                <select class="form-control inline" id="vehicleID" (change)="getCurrentSpeed($event)">
+                <select class="form-control inline" id="vehicleID" (change)="setVehicle($event)">
                     <option *ngFor="let id of vehicleIDs" [value]="id">{{id}}</option>
                 </select>
             </div>

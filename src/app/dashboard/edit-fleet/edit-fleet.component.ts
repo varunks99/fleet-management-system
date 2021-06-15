@@ -28,6 +28,8 @@ export class EditFleetComponent implements OnInit {
   }
 
   add(data: any) {
+    console.log(data);
+
     data.mrLat = 45 + Math.random();
     data.mrLong = (73 + Math.random()) * -1;
     this.http.post(`${this.url}/vehicle`, data)
@@ -44,10 +46,12 @@ export class EditFleetComponent implements OnInit {
       )
   }
 
-  delete(id: string | number) {
+  delete(id: string) {
     this.http.delete(`${this.url}/vehicle/${id}`)
       .subscribe(
         (res: any) => {
+          let idx = this.vehicleIDs.indexOf(id);
+          this.vehicleIDs.splice(idx, 1);
           alert("Deleted " + id)
         }
       )

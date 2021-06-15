@@ -1,0 +1,435 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an API developed for a fleet monitoring system software. This is used to allow communication from microcontrollers and the website to the server..",
+    "version": "1.0.0",
+    "title": "Fleet Monitoring System",
+    "contact": {
+      "email": "sdmay18-18@iastate.edu"
+    }
+  },
+  "host": "35.193.87.37:8080",
+  "tags": [
+    {
+      "name": "vehicle",
+      "description": "Information about vehicles in your fleet"
+    },
+    {
+      "name": "manager",
+      "description": "Access to manager information"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/vehicle": {
+      "post": {
+        "tags": [
+          "vehicle"
+        ],
+        "summary": "Add a new vehicle",
+        "description": "",
+        "operationId": "addVehicle",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "uid",
+            "description": "The uid of the vehicle to create.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "uid"
+              ],
+              "properties": {
+                "uid": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "vehicle"
+        ],
+        "summary": "List all vehicles",
+        "description": "A listAll for vehicles. This is mainly used for testing.",
+        "operationId": "getVehicles",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Vehicle"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/vehicle/{uid}": {
+      "get": {
+        "tags": [
+          "vehicle"
+        ],
+        "summary": "Finds Vehicle by uid",
+        "description": "Gets data of a specific vehicle",
+        "operationId": "findVehicleByUID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "uid of the vehicle",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Vehicle"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid uid"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "vehicle"
+        ],
+        "summary": "Updated vehicle data",
+        "description": "Updated vehicle data from microcontroller.",
+        "operationId": "updateVehicle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "uid of the vehicle that needs to be updated",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated vehicle data object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VehicleData"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid data supplied"
+          },
+          "404": {
+            "description": "Vehicle not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "vehicle"
+        ],
+        "summary": "Delete vehicle",
+        "description": "Deletes a vehicle by uid.",
+        "operationId": "deleteVehcile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "The uid of the vehicle that needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid uid supplied"
+          },
+          "404": {
+            "description": "Vehicle not found"
+          }
+        }
+      }
+    },
+    "/manager": {
+      "post": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Add a new manager",
+        "description": "",
+        "operationId": "addManager",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "username",
+            "description": "The manager to create.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "username"
+              ],
+              "properties": {
+                "username": {
+                  "type": "number"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "vehicles": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "uid": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "List all managers",
+        "description": "A listAll for managers. This is mainly used for testing.",
+        "operationId": "getmManagers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Manager"
+              }
+            }
+          },
+          "400": {
+            "description": "Error connecting"
+          }
+        }
+      }
+    },
+    "/manager/{username}": {
+      "get": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Finds Manager by username",
+        "description": "Gets vehicles of a specific manager",
+        "operationId": "findManagerByUsername",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username of the manager",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uid": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Updated vehicle list",
+        "description": "Vehicles to be added to a manager with {username}.",
+        "operationId": "updateManager",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username of the manager that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "uid",
+            "description": "The uid of the vehicle to add.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "uid"
+              ],
+              "properties": {
+                "uid": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid data supplied"
+          },
+          "404": {
+            "description": "Manager not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Vehicle": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "number"
+        },
+        "mrGas": {
+          "type": "number"
+        },
+        "mrSpeed": {
+          "type": "number"
+        },
+        "mrLong": {
+          "type": "number"
+        },
+        "mrLat": {
+          "type": "number"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VehicleData"
+          }
+        }
+      }
+    },
+    "Manager": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "vehicles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "VehicleData": {
+      "type": "object",
+      "properties": {
+        "speed": {
+          "type": "number"
+        },
+        "gas": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Fleet Monitoring System",
+    "url": "https://sdmay18-18.sd.ece.iastate.edu"
+  }
+}

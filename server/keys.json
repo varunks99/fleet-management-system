@@ -1,0 +1,7 @@
+{
+ "mongoHost": "ds259855.mlab.com",
+ "mongoPort": "59855",
+ "mongoDatabase": "fleetdb",
+ "mongoUser": "fleet",
+ "mongoPass": "manager"
+}
