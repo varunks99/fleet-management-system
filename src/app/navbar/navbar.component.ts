@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SessionService } from '../services/sessionService/session-service.service';
 
 @Component({
@@ -7,11 +8,12 @@ import { SessionService } from '../services/sessionService/session-service.servi
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  username: string = '';
+  public isMenuCollapsed = true;
+  userName$!: Observable<string>;
   constructor(private sessionService: SessionService) { }
 
   ngOnInit(): void {
-    this.username = window.sessionStorage.getItem('username') || '';
+    this.userName$ = this.sessionService.getUserName();
   }
 
   logOut() {
