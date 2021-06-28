@@ -50,14 +50,14 @@ git clone https://source.developers.google.com/p/${PROJECTID}/r/${REPOSITORY} /o
 
 # Obtain external IP address of the VM and replace it in the environment file of Angular
 ExternalIP=$(curl -s http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/?recursive=true -H "Metadata-Flavor: Google" | grep -oP '(?<="externalIp":")[0-9\.]*')
-sed -i 's,127.0.0.1,'"$ExternalIP"',' /opt/app/fms/src/environments/environment.prod.ts
+sed -i 's,127.0.0.1,'"$ExternalIP"',' /opt/app/fms/client/src/environments/environment.prod.ts
 # Install dependencies for client
-cd /opt/app/fms
+cd /opt/app/fms/client
 npm ci && npm run build
 
 # Transfer the files from build folder to /var/www/html (default folder for nginx)
 chmod -R 755 /var/www
-cp -a /opt/app/fms/dist/fleet-client/. /var/www/html 
+cp -a /opt/app/fms/client/dist/fleet-client/. /var/www/html 
 
 # Install dependencies for server
 cd /opt/app/fms/server

@@ -15,17 +15,17 @@ source.developers.google.com,FALSE,/,TRUE,2147483647,o,git-varun-kevin.shiri.1.e
 __END__
 eval 'set -o history' 2>/dev/null || unsetopt HIST_IGNORE_SPACE 2>/dev/null
 
-rm -r /opt/app/fms/*
+rm -rf /opt/app/fms/*
 git clone https://source.developers.google.com/p/${PROJECTID}/r/${REPOSITORY} /opt/app/fms
 
 # Obtain external IP address of the VM and replace it in the environment file of Angular
 ExternalIP=$(curl -s http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/?recursive=true -H "Metadata-Flavor: Google" | grep -oP '(?<="externalIp":")[0-9\.]*')
-sed -i 's,127.0.0.1,'"$ExternalIP"',' /opt/app/fms/src/environments/environment.prod.ts
+sed -i 's,127.0.0.1,'"$ExternalIP"',' /opt/app/fms/client/src/environments/environment.prod.ts
 # Install dependencies for client
-cd /opt/app/fms
+cd /opt/app/fms/client
 npm ci && npm run build
 # Transfer the files from build folder to /var/www/html (default folder for nginx)
-rm -r /var/www/html/*
+rm -rf /var/www/html/*
 cp -a /opt/app/fms/dist/fleet-client/. /var/www/html 
 
 # Update server
