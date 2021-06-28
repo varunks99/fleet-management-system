@@ -1,46 +1,30 @@
-var express = require('express'),
+let express = require('express'),
 	app = express(),
+	http = require('http'),
 	ports = process.env.PORT || 8080,
 	mongoose = require('mongoose'),
-	Example = require('./api/models/exampleModel'),
-	Manager = require('./api/models/managerModel'),
-	Vehicle = require('./api/models/vehicleModel'),
-	bodyParser = require('body-parser'),
-	cors = require('cors');
-mongodb = require('mongodb'),
-	nconf = require('nconf');
-server = false;
+	cors = require('cors'),
+	terminate = require('./terminate');
 
-if (server) {
-	nconf.argv().env().file('keys.json');
-}
-/*
-const user = nconf.get('mongoUser');
-const pass = nconf.get('mongoPass');
-const host = nconf.get('mongoHost');
-const port = nconf.get('mongoPort');
+const server = http.createServer();
 
-
-let uri = `mongodb://${user}:${pass}@${host}:${port}`;
-if (nconf.get('mongoDatabase')) {
-	  uri = `${uri}/${nconf.get('mongoDatabase')}`;
-}
-console.log(uri);
-*/
-uri = 'mongodb://fleet:manager@ds259855.mlab.com:59855/fleetdb'
-urilocal = 'mongodb+srv://fleetuser:fleetuser@fleetmanagement.amo3c.mongodb.net/fleetdb?retryWrites=true&w=majority'
-//mongoose.Promise = global.Promise;
-if (server) {
-	mongoose.connect(uri, { useMongoClient: true });
-}
-else {
-	mongoose.connect(urilocal, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
-}
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+const uri = 'mongodb+srv://fleetuser:fleetuser@fleetmanagement.amo3c.mongodb.net/fleetdb?retryWrites=true&w=majority'
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+app.use(express.urlencoded({ extended: true, useNewUrlParser: true, useUnifiedTopology: true }));
+app.use(express.json());
 app.use(cors());
 
-var routes = require('./api/routes/exampleRoute');
+var routes = require('./api/routes/routes');
 routes(app);
 
-app.listen(ports, () => console.log(`Listening on port ${ports}`));
+const exitHandler = terminate(server, {
+	coredump: false,
+	timeout: 500
+})
+
+process.on('uncaughtException', exitHandler(1, 'Unexpected Error'));
+process.on('unhandledRejection', exitHandler(1, 'Unhandled Promise'));
+process.on('SIGTERM', exitHandler(0, 'SIGTERM'));
+process.on('SIGINT', exitHandler(0, 'SIGINT'));
+
+server.listen(ports, () => console.log(`Listening on port ${ports}`));
