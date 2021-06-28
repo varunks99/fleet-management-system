@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fms-client-service
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    app: fms-client
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fms-client-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: fms-client
+      labels:
+        app: fms-client
+        tier: frontend
+      spec:
+        containers:
+          - name: fms-client
+            image: "gcr.io/fleet-management-system/client:1.0"
+            ports:
+              - containerPort: 80
+                name: http-port
+    selector:
+      matchLabels:
+        app: fms-client

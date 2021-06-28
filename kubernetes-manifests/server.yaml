@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fms-server-service
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+      app: fms-server
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fms-server-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+    name: fms-server
+    labels:
+      app: fms-server
+      tier: backend
+    spec:
+      containers:
+        - name: fms-server
+          image: "gcr.io/fleet-management-system/server:1.0"
+          ports:
+            - containerPort: 8080
+              name: server-port
+  selector:
+    matchLabels:
+      app: fms-server
+  
+
