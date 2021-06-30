@@ -14,7 +14,7 @@ export class SessionService {
   private username = new BehaviorSubject<string>('');
 
   login(data: any) {
-    return this.http.post(this.url + '/manager/login', data)
+    return this.http.post(`${this.url}/manager/login`, data)
       .pipe(map((result: any) => {
         if (result.Validated) {
           this.username.next(data.username);
@@ -26,7 +26,7 @@ export class SessionService {
 
   register(data: any) {
     window.sessionStorage.removeItem('username');
-    return this.http.post(this.url + '/manager', data)
+    return this.http.post(`${this.url}/manager`, data)
       .pipe(map((result: any) => {
         return result;
       }))

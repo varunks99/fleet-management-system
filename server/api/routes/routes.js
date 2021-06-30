@@ -1,28 +1,35 @@
-module.exports = function (app) {
-	var manager = require('../controllers/managerController');
-	var vehicle = require('../controllers/vehicleController');
+	const express = require('express')
+	const router = express.Router()
+	const manager = require('../controllers/managerController');
+	const vehicle = require('../controllers/vehicleController');
 
-	app.route('/manager')
+	router.route('/manager')
 		.get(manager.listAll)
 		.post(manager.create)
 
-	app.route('/manager/login')
+	router.route('/manager/login')
 		.post(manager.comparePassword)
 
-	app.route('/manager/:username')
+	router.route('/manager/:username')
 		.get(manager.getVehicles)
 		.put(manager.updateVehicles);
 
-	app.route('/vehicle')
+	router.route('/vehicle')
 		.get(vehicle.listAll)
 		.post(vehicle.create);
 
-	app.route('/vehicle/:uid')
+	router.route('/vehicle/:uid')
 		.get(vehicle.getByUid)
 		.put(vehicle.updateVehicle)
 		.delete(vehicle.deleteByUid);
 
-	app.get('/health', (req, res) => {
+	router.get('/health', (req, res) => {
 		res.status(200).send('ok')
 	})
-};
+
+	router.get('/', (req, res) => {
+		res.status(200).send('Welcome to FMS Server');
+	})
+
+	module.exports = router;
+

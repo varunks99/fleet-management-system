@@ -1,7 +1,5 @@
-var mongoose = require('mongoose'),
-	Manager = mongoose.model('Managers');
+var Manager = require('../models/managerModel');
 var bcrypt = require('bcryptjs');
-
 
 
 exports.create = function (req, res) {

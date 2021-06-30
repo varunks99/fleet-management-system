@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
-  mapsApiKey: 'AIzaSyBh8uqFiqjdC87evPPbsI0WZBaFxzHq5uk'
 };
 
 /*

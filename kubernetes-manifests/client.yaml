@@ -6,7 +6,7 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      targetPort: http-port
+      targetPort: 80
   selector:
     app: fms-client
   type: LoadBalancer
@@ -23,13 +23,14 @@ spec:
       labels:
         app: fms-client
         tier: frontend
-      spec:
-        containers:
-          - name: fms-client
-            image: "gcr.io/fleet-management-system/client:1.0"
-            ports:
-              - containerPort: 80
-                name: http-port
-    selector:
-      matchLabels:
-        app: fms-client
+    spec:
+      containers:
+        - name: fms-client
+          image: fms-client:1.0 #"gcr.io/fleet-management-system/client:1.0"
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+              name: http-port
+  selector:
+    matchLabels:
+      app: fms-client
