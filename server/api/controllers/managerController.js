@@ -12,7 +12,6 @@ exports.create = function (req, res) {
 		bcrypt.hash(newManager.password, salt, function (err, hash) {
 			newManager.password = hash;
 			newManager.save(function (err, manager) {
-				res.setHeader('Access-Control-Allow-Origin', '*');
 				if (err)
 					res.send(error);
 				res.json(manager);
@@ -23,18 +22,16 @@ exports.create = function (req, res) {
 
 exports.deleteByUsername = function (req, res) {
 	Manager.remove({ username: req.params.username }, function (err, manager) {
-		res.setHeader('Access-Control-Allow-Origin', '*');
 		if (err)
-			res.send(err)
+			return res.status(500).send(err)
 		res.json(manager);
 	});
 };
 
 exports.listAll = function (req, res) {
 	Manager.find({}, function (err, ex) {
-		res.setHeader('Access-Control-Allow-Origin', '*');
 		if (err)
-			res.send(err)
+			return res.status(500).send(err)
 		res.json(ex);
 	});
 };
@@ -47,9 +44,8 @@ exports.getManagerByUsername = function (username, callback) {
 
 exports.comparePassword = function (req, res) {
 	Manager.findOne({ username: req.body.username }, function (err, managerv) {
-		res.setHeader('Access-Control-Allow-Origin', '*');
 		if (err)
-			res.send(err);
+			return res.status(500).send(err);
 		bcrypt.compare(req.body.password, managerv.password, function (err, isMatch) {
 			if (err) throw err;
 			if (isMatch) {
@@ -67,12 +63,10 @@ exports.comparePassword = function (req, res) {
 exports.updateVehicles = function (req, res) {
 	Manager.updateOne({ username: req.params.username }, { $push: { "vehicles": req.body.uid } }, { safe: true, upsert: true }, function (err, manager) {
 		if (err)
-			res.send(err);
-
+			return res.status(500).send(err);
 		Manager.findOne({ username: req.params.username }, function (err, managerv) {
-			res.setHeader('Access-Control-Allow-Origin', '*');
 			if (err)
-				res.send(err);
+				return res.status(500).send(err);
 			res.json(managerv.vehicles);
 		});
 	});
@@ -80,9 +74,8 @@ exports.updateVehicles = function (req, res) {
 
 exports.getVehicles = function (req, res) {
 	Manager.findOne({ username: req.params.username }, function (err, manager) {
-		res.setHeader('Access-Control-Allow-Origin', '*');
 		if (err)
-			res.send(err);
+			return res.status(500).send(err);
 		res.json(manager.vehicles);
 	});
 };

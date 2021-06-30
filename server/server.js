@@ -10,7 +10,7 @@ const server = http.createServer(app).listen(ports, () => {
 	console.log(`Listening on port ${ports}`)
 });
 
-const uri = 'mongodb+srv://fleetuser:fleetuser@fleetmanagement.amo3c.mongodb.net/fleetdb?retryWrites=true&w=majority'//'mongodb://mongodb-service:27017/fms'
+const uri = 'mongodb://mongodb-service:27017/fms'
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 app.use(express.urlencoded({ extended: true, useNewUrlParser: true, useUnifiedTopology: true }));
 app.use(express.json());
