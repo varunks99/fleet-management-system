@@ -1,6 +1,5 @@
-var mongoose = require('mongoose'),
-	Manager = mongoose.model('Managers');
-var bcrypt = require('bcryptjs');
+const Manager = require('../models/managerModel');
+const bcrypt = require('bcryptjs');
 
 
 

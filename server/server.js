@@ -6,7 +6,9 @@ let express = require('express'),
 	cors = require('cors'),
 	terminate = require('./terminate');
 
-const server = http.createServer();
+const server = http.createServer(app).listen(ports, () => {
+	console.log(`Listening on port ${ports}`)
+});
 
 const uri = 'mongodb+srv://fleetuser:fleetuser@fleetmanagement.amo3c.mongodb.net/fleetdb?retryWrites=true&w=majority'
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -26,5 +28,3 @@ process.on('uncaughtException', exitHandler(1, 'Unexpected Error'));
 process.on('unhandledRejection', exitHandler(1, 'Unhandled Promise'));
 process.on('SIGTERM', exitHandler(0, 'SIGTERM'));
 process.on('SIGINT', exitHandler(0, 'SIGINT'));
-
-server.listen(ports, () => console.log(`Listening on port ${ports}`));

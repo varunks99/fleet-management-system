@@ -1,6 +1,5 @@
-var mongoose = require('mongoose'),
-	Vehicle = mongoose.model('Vehicles'),
-	Manager = mongoose.model('Managers');
+const Vehicle = require('../models/vehicleModel'),
+	Manager = require('../models/managerModel');
 
 exports.listAll = function (req, res) {
 	Vehicle.find({}, function (err, vehicle) {
