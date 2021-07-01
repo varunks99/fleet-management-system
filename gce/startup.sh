@@ -24,6 +24,9 @@ server {
     server_name _;
     root /var/www/html;
     index index.html;
+    location /api/ {
+        proxy_pass http://localhost:8080;
+    }
     location / {
         try_files $uri$args $uri$args/ /index.html;
     }
@@ -48,9 +51,6 @@ export HOME=/root
 ##########################################
 git clone https://source.developers.google.com/p/${PROJECTID}/r/${REPOSITORY} /opt/app/fms
 
-# Obtain external IP address of the VM and replace it in the environment file of Angular
-ExternalIP=$(curl -s http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/?recursive=true -H "Metadata-Flavor: Google" | grep -oP '(?<="externalIp":")[0-9\.]*')
-sed -i 's,127.0.0.1,'"$ExternalIP"',' /opt/app/fms/client/src/environments/environment.prod.ts
 # Install dependencies for client
 cd /opt/app/fms/client
 npm ci && npm run build
