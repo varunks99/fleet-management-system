@@ -31,12 +31,12 @@ spec:
           ports:
             - containerPort: 80
               name: http-port
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 80
-        initialDelaySeconds: 5
-        periodSeconds: 120
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 120
   selector:
     matchLabels:
       app: fms-client

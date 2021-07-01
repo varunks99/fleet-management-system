@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 export class SessionService {
   url: string = environment.apiUrl;
   constructor(private router: Router, private http: HttpClient) { }
-  private username = new BehaviorSubject<string>('');
+  private username = new BehaviorSubject<string | null>(window.sessionStorage.getItem('username'));
 
   login(data: any) {
     return this.http.post(`${this.url}/manager/login`, data)

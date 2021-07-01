@@ -5,14 +5,25 @@
     </button>
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
-            <span *ngIf="!(userName$ | async); else loggedIn" class="row">
-                <a class="nav-link btn btn-primary text-white mr-2" routerLink="/login">Login</a>
-                <a class="nav-link btn btn-primary text-white mr-2" routerLink="/register">Register</a>
-            </span>
-            <ng-template #loggedIn>
+            <span *ngIf="(userName$ | async) as username; else loggedIn" class="row">
                 <a class="nav-link" routerLink="/fleet-map">Map</a>
                 <a class="nav-link" routerLink="/edit-fleet">Edit Fleet</a>
-                <button class="btn btn-primary" (click)="logOut()">Logout</button>
+                <div style="height: 90%; width:1px; background: #ddd; margin: 5px"></div>
+                <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+                    <button class="btn bg-transparent mr-2" id="dropdownManual" ngbDropdownAnchor
+                        (focus)="myDrop.open()"><span
+                            class="d-none d-lg-inline mr-2 text-gray-600">{{username}}</span><img
+                            class="border rounded-circle img-profile" src="assets/images/user.svg" width="30"
+                            height="30"></button>
+                    <div class="shadow dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownManual"
+                        class="bg-white-50">
+                        <button class="btn bg-transparent" ngbDropdownItem (click)="logOut()">Logout</button>
+                    </div>
+                </div>
+            </span>
+            <ng-template #loggedIn>
+                <a class="nav-link btn btn-primary text-white mr-2" routerLink="/login">Login</a>
+                <a class="nav-link btn btn-primary text-white mr-2" routerLink="/register">Register</a>
             </ng-template>
         </div>
     </div>

@@ -9,7 +9,7 @@ spec:
       protocol: TCP
   selector:
       app: fms-server
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,18 +31,18 @@ spec:
           ports:
             - containerPort: 8080
               name: server-port
-      readinessProbe:
-        httpGet:
-          path: /api/health
-          port: 8080
-        initialDelaySeconds: 3
-        periodSeconds: 5
-      livenessProbe:
-        httpGet:
-          path: /api/health
-          port: 8080
-        initialDelaySeconds: 5
-        periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 60
   selector:
     matchLabels:
       app: fms-server

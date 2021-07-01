@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label, Color, BaseChartDirective } from 'ng2-charts';
+import { ChartOptions, ChartDataSets } from 'chart.js';
+import { Label, BaseChartDirective } from 'ng2-charts';
 import { environment } from '../../../environments/environment';
 
 import Map from 'ol/Map.js';
@@ -10,7 +10,6 @@ import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 import { fromLonLat } from 'ol/proj';
 import VectorLayer from 'ol/layer/Vector';
-import Vector from 'ol/source/Vector';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';

@@ -28,8 +28,6 @@ export class EditFleetComponent implements OnInit {
   }
 
   add(data: any) {
-    console.log(data);
-
     data.mrLat = 45 + Math.random();
     data.mrLong = (73 + Math.random()) * -1;
     this.http.post(`${this.url}/vehicle`, data)

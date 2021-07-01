@@ -8,6 +8,9 @@
                 <div class="col-md-6">
                     <div class="p-5">
                         <div class="text-center">
+                            <p *ngIf="status" class="alert"
+                                [ngClass]="{'alert-success': status.flag == 'success', 'alert-danger': status.flag == 'fail'}">
+                                {{status.message}}</p>
                             <h4 class="text-dark mb-4">Register</h4>
                         </div>
                         <form class="user" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">

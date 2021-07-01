@@ -8,7 +8,7 @@ import { SessionService } from '../../services/sessionService/session-service.se
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  status: any;
   constructor(private router: Router, private _sessionService: SessionService) { }
 
   ngOnInit(): void {
@@ -18,8 +18,13 @@ export class RegisterComponent implements OnInit {
     this._sessionService.register(data)
       .subscribe(
         (res: any) => {
-          console.log(res);
-          this.router.navigate(['/login']);
+          this.status = res;
+          if (res.flag == 'success')
+            setTimeout(() => this.router.navigate(['/login']), 2000)
+
+        },
+        (err: any) => {
+          this.status = err.error;
         }
       )
   }
