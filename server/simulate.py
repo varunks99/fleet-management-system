@@ -3,8 +3,9 @@ import random
 from time import sleep
 
 url = 'http://localhost:8080'
-username = 'fleetadmin'
-ids = requests.get(f'{url}/manager/{username}').json()
+username = 'user2'
+ids = requests.get(f'{url}/api/manager/{username}').json()
+print(ids)
 
 try:
     print("Press Ctrl-C to exit")
@@ -12,7 +13,7 @@ try:
         for id in ids:
             data = {'latitude': 45.630001 + random.random(), 'longitude': -73.519997 + random.random(),
                     'speed': 80 + random.randint(0, 50), 'gas': random.randint(50, 80)}
-            r = requests.put(f'{url}/vehicle/{id}', data)
+            r = requests.put(f'{url}/api/vehicle/{id}', data)
         sleep(2)
 except KeyboardInterrupt:
     print("Terminating...")

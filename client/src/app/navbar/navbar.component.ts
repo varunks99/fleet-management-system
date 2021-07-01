@@ -9,11 +9,13 @@ import { SessionService } from '../services/sessionService/session-service.servi
 })
 export class NavbarComponent implements OnInit {
   public isMenuCollapsed = true;
-  userName$!: Observable<string>;
+  userName$!: Observable<string | null>;
   constructor(private sessionService: SessionService) { }
 
   ngOnInit(): void {
     this.userName$ = this.sessionService.getUserName();
+    console.log(this.userName$);
+
   }
 
   logOut() {

@@ -11,10 +11,10 @@ import { BehaviorSubject } from 'rxjs';
 export class SessionService {
   url: string = environment.apiUrl;
   constructor(private router: Router, private http: HttpClient) { }
-  private username = new BehaviorSubject<string>('');
+  private username = new BehaviorSubject<string | null>(window.sessionStorage.getItem('username'));
 
   login(data: any) {
-    return this.http.post(this.url + '/manager/login', data)
+    return this.http.post(`${this.url}/manager/login`, data)
       .pipe(map((result: any) => {
         if (result.Validated) {
           this.username.next(data.username);
@@ -26,7 +26,7 @@ export class SessionService {
 
   register(data: any) {
     window.sessionStorage.removeItem('username');
-    return this.http.post(this.url + '/manager', data)
+    return this.http.post(`${this.url}/manager`, data)
       .pipe(map((result: any) => {
         return result;
       }))

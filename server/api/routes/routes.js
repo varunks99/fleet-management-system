@@ -1,28 +1,31 @@
-module.exports = function (app) {
-	var manager = require('../controllers/managerController');
-	var vehicle = require('../controllers/vehicleController');
+const express = require('express')
+const router = express.Router()
+const manager = require('../controllers/managerController');
+const vehicle = require('../controllers/vehicleController');
 
-	app.route('/manager')
-		.get(manager.listAll)
-		.post(manager.create)
+router.route('/manager')
+	.get(manager.listAll)
+	.post(manager.create)
 
-	app.route('/manager/login')
-		.post(manager.comparePassword)
+router.route('/manager/login')
+	.post(manager.comparePassword)
 
-	app.route('/manager/:username')
-		.get(manager.getVehicles)
-		.put(manager.updateVehicles);
+router.route('/manager/:username')
+	.get(manager.getVehicles)
+	.put(manager.updateVehicles);
 
-	app.route('/vehicle')
-		.get(vehicle.listAll)
-		.post(vehicle.create);
+router.route('/vehicle')
+	.get(vehicle.listAll)
+	.post(vehicle.create);
 
-	app.route('/vehicle/:uid')
-		.get(vehicle.getByUid)
-		.put(vehicle.updateVehicle)
-		.delete(vehicle.deleteByUid);
+router.route('/vehicle/:uid')
+	.get(vehicle.getByUid)
+	.put(vehicle.updateVehicle)
+	.delete(vehicle.deleteByUid);
 
-	app.get('/health', (req, res) => {
-		res.status(200).send('ok')
-	})
-};
+router.get('/health', (req, res) => {
+	res.status(200).send('healthy')
+})
+
+module.exports = router;
+
