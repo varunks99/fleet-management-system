@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    fms-client:
+        build: client
+        #image: 'gcr.io/fleet-management-system/client:1.0'
+        ports:
+            - '80:80'
+
+    fms-server:
+        build: server
+        #image: 'gcr.io/fleet-management-system/server:1.0'
+        ports:
+            - '8080:8080'
+        links:
+            - mongo
+    
+    mongo:
+        image: mongo:4.4.6
+        ports:
+            - '27017:27017'
+
+        
