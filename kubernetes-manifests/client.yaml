@@ -26,8 +26,7 @@ spec:
     spec:
       containers:
         - name: fms-client
-          image: fms-client:1.0 #"gcr.io/fleet-management-system/client:1.0"
-          imagePullPolicy: Never
+          image: "gcr.io/fleet-management-system-ets/client"
           ports:
             - containerPort: 80
               name: http-port

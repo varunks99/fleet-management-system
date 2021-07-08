@@ -4,14 +4,14 @@ metadata:
   name: fleet-management-system
 build:
   artifacts:
-  - image: fms-client
+  - image: gcr.io/fleet-management-system-ets/client
     context: client
-    docker:
-      dockerfile: Dockerfile
-  - image: fms-server
+    kaniko:
+      cleanup: true
+  - image: gcr.io/fleet-management-system-ets/server
     context: server
-    docker:
-      dockerfile: Dockerfile
+    kaniko:
+      cleanup: true
 deploy:
   kubectl:
     manifests:

@@ -26,8 +26,7 @@ spec:
     spec:
       containers:
         - name: fms-server
-          image: fms-server:1.0 #"gcr.io/fleet-management-system/server:1.0"
-          imagePullPolicy: Never
+          image: "gcr.io/fleet-management-system-ets/server"
           ports:
             - containerPort: 8080
               name: server-port
