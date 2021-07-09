@@ -12,6 +12,8 @@ build:
     context: server
     kaniko:
       cleanup: true
+  cluster:
+    pullSecretName: kaniko-secret
 deploy:
   kubectl:
     manifests:
