@@ -36,6 +36,9 @@ spec:
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 120
+          resources:
+            requests:
+              cpu: "200m"
   selector:
     matchLabels:
       app: fms-client

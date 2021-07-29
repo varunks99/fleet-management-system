@@ -42,6 +42,9 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 60
+          resources:
+            requests:
+              cpu: "200m"
   selector:
     matchLabels:
       app: fms-server
