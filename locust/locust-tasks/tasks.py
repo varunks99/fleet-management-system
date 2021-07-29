@@ -4,7 +4,20 @@ from locust import HttpUser, TaskSet, task
 from random import random, randint
 
 
-class MetricsTaskSet(TaskSet):
+class ClientTaskSet(TaskSet):
+    @task
+    def load_home(self):
+        self.client.get('/')
+
+    @task
+    def load_login(self):
+        self.client.get('/login')
+
+    def stop(self):
+        self.interrupt()
+
+
+class ServerTaskSet(TaskSet):
     @task
     def login(self):
         self.client.post('/api/manager/login',
@@ -19,8 +32,11 @@ class MetricsTaskSet(TaskSet):
         uid = randint(100, 9999)
         self.client.post('/api/vehicle', {"uid": uid, "bitrate": randint(10, 90),
                                           "gasTankSize": randint(50, 100), "mrLat":  45 + random(), "mrLong": (73 + random()) * -1})
-        self.client.delete(f'/api/vehicle/{uid}')
+        self.client.delete(f'/api/vehicle/{uid}', name="/api/vehicle/[uid]")
+
+    def stop(self):
+        self.interrupt()
 
 
 class MetricsLocust(HttpUser):
-    tasks = [MetricsTaskSet]
+    tasks = [ClientTaskSet, ServerTaskSet]
